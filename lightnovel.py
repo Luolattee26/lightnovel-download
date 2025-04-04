@@ -7,9 +7,11 @@ from utils import *
 def parse_args():
     """Parse input arguments."""
     parser = argparse.ArgumentParser(description='config')
-    parser.add_argument('--book_no', default='0000', type=str)
-    parser.add_argument('--volume_no', default='1', type=int)
-    parser.add_argument('--no_input', default=False, type=bool)
+    parser.add_argument('-b', '--book_no', default=None, type=str, help='book number of wenku8')
+    parser.add_argument('-v', '--volume_no', default=None, type=int, help='volume number of book')
+    parser.add_argument('-s', '--no_input', default=False, type=bool, help='only download one book, the book_no and volume_no are required with command line')
+    parser.add_argument('-o', '--output', default=None, type=str, help='output path, defult is ~/Downloads')
+
     args = parser.parse_args()
     return args
 
@@ -117,18 +119,35 @@ def downloader_router(root_path,
     
 if __name__=='__main__':
     args = parse_args()
-    download_path = os.path.join(os.path.expanduser('~'), 'Downloads')
+
+
+    if args.book_no is None and args.volume_no is None:
+        args.no_input = False
+    elif args.no_input:
+        assert args.book_no is not None and args.volume_no is not None, ValueError('book_no and volume_no are required when no_input is True')
+
+    if args.output:
+        download_path = args.output
+    else:
+        download_path = os.path.join(os.path.expanduser('~'), 'Downloads')
 
     if args.no_input:
-        downloader_router(root_path='out', book_no=args.book_no, volume_no=args.volume_no)
+        downloader_router(root_path=download_path, book_no=args.book_no, volume_no=args.volume_no)
     else:
         while True:
             args.book_no = input('请输入书籍号：')
+
+            if args.book_no.lower() == 'q':
+                break
+
             args.volume_no = input('请输入卷号(查看目录信息不输入直接按回车，下载多卷请使用逗号分隔或者连字符-)：')
-            # args.book_no = '2640'
-            # args.volume_no = '2'
-            downloader_router(root_path='out', book_no=args.book_no, volume_no=args.volume_no)
-            # exit(0)
+
+            if args.volume_no.lower() == 'q':
+                break
+
+
+            downloader_router(root_path=download_path, book_no=args.book_no, volume_no=args.volume_no)
+
     
         
 

@@ -1,0 +1,3 @@
+([('lightnovel_gui',
+   '/Volumes/Tokyo/Code/lightnovel-download/dist/lightnovel_gui',
+   'EXECUTABLE')],)
