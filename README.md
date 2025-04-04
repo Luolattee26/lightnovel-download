@@ -8,7 +8,9 @@
 
 [文库吧/轻小说文库](www.wenku8.net)(wenku8)网站小说下载，EPUB打包。
 
-原项目地址：https://github.com/ShqWW/lightnovel-download，只是为了自己瞎捣鼓方便 fork 了一下
+原项目地址：https://github.com/ShqWW/lightnovel-download
+
+只是为了自己瞎捣鼓方便 fork 了一下
 
 
 ## 使用前安装需要的包
